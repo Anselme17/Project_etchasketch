@@ -27,6 +27,7 @@ function random(max) {
 
 function bgChange(e) {
     const rndCol = `rgb(${random(255)} ${random(255)} ${random(255)})`;
+    let opa = 
     e.target.style.backgroundColor = rndCol;
 }
 
@@ -35,6 +36,13 @@ changebutton.addEventListener("click", () => {
     let h = parseInt(inputheight.value) || 16;
     generateGrid(w, h);
 });
+
+function darkBox(e) {
+    let current = parseFloat(window.getComputedStyle(e.target).opacity);
+    if (current > 0.1) {
+        e.target.style.opacity = (current + 0.1).toFixed(1);
+    }
+}
 
 function generateGrid(cols, rows) {
     container.innerHTML = "";
@@ -46,7 +54,9 @@ function generateGrid(cols, rows) {
         let box = document.createElement("div");
         box.classList.add("box");
         box.style.width = `${boxSize}%`;
+        box.style.opacity = "0.2";
         box.addEventListener("mouseenter", bgChange);
+        box.addEventListener("mouseenter", darkBox);
         container.appendChild(box);
     }
 }
